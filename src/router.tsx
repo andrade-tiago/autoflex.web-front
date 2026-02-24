@@ -1,10 +1,8 @@
 import { createBrowserRouter, redirect } from 'react-router'
 import { MaterialsPage } from './features/materials/pages/materials.page'
 import { ProductsPage } from './features/products/pages/products.page'
+import { SuggestionPage } from './features/production/pages/suggestion.page'
 import { App } from './App'
-
-export const MATERIALS_ROUTE = 'materials'
-export const PRODUCTS_ROUTE = 'products'
 
 export const router = createBrowserRouter([
   {
@@ -12,17 +10,30 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: '/',
-        loader: () => redirect(MATERIALS_ROUTE)
+        index: true,
+        loader: () => redirect('materials')
       },
       {
-        path: MATERIALS_ROUTE,
+        path: 'materials',
         element: <MaterialsPage />,
       },
       {
-        path: PRODUCTS_ROUTE,
+        path: 'products',
         element: <ProductsPage />,
       },
-    ]
+      {
+        path: 'production',
+        children: [
+          {
+            index: true,
+            loader: () => redirect('suggestion'),
+          },
+          {
+            path: 'suggestion',
+            element: <SuggestionPage />,
+          },
+        ],
+      },
+    ],
   },
 ])
