@@ -122,6 +122,7 @@ export const UpdateProductDialog: React.FunctionComponent<UpdateProductDialogPro
                 {...form.control.register('value')}
                 type='number'
                 min={0}
+                step={1/100}
                 aria-invalid={form.control.getFieldState('value').invalid}
               />
               {form.control.getFieldState('value').invalid && (

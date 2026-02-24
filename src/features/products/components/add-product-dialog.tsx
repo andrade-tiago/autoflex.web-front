@@ -103,6 +103,7 @@ export const AddProductDialog: React.FunctionComponent<AddProductDialogProps> = 
               <Input
                 {...form.control.register('value')}
                 type='number'
+                step={1/100}
                 min={0}
                 aria-invalid={form.control.getFieldState('value').invalid}
               />
