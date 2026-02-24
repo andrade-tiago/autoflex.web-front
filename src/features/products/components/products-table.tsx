@@ -25,6 +25,7 @@ import type { Product } from '@/core/domain/models/product.model'
 import { useMaterials } from '@/hooks/use-materials.hook'
 import type { RawMaterial } from '@/core/domain/models/raw-material.model'
 import type { ComponentProps } from 'react'
+import { CurrencyFormatter } from '@/core/infra/shared/currency-formatter'
 
 const TABLE_COLS = 3
 
@@ -71,8 +72,7 @@ export const ProductsTable: React.FunctionComponent<ProductsTableProps> = (props
               <ul>
                 {product.composition.map(item => (
                   <li key={item.materialId} className='list-disc list-inside'>
-                    {getMaterial(item.materialId)?.name}:
-                    {' '}{item.quantity}
+                    {getMaterial(item.materialId)?.name}: {item.quantity}
                   </li>
                 ))}
               </ul>
@@ -121,10 +121,10 @@ const ProductTableRow: React.FunctionComponent<ProductTableRowProps> = ({
       <TableCell>
         {product.name}
       </TableCell>
-      <TableCell>
-        {product.value.toFixed(2)}
+      <TableCell className="text-right">
+        {CurrencyFormatter.format(product.value)}
       </TableCell>
-      <TableCell>
+      <TableCell className="text-right">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost">
@@ -153,5 +153,5 @@ const ProductTableRow: React.FunctionComponent<ProductTableRowProps> = ({
 }
 
 const DataSkeleton: React.FunctionComponent = () => {
-  return <span className="w-2/3 h-4 inline-block bg-gray-200 animate-pulse rounded-2xl" />
+  return <span className="w-2/3 h-4 inline-block bg-gray-200 animate-pulse rounded-xl" />
 }

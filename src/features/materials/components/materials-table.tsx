@@ -52,10 +52,10 @@ export const MaterialsTable: React.FunctionComponent<MaterialsTableProps> = (pro
             <TableCell>
               {item.name}
             </TableCell>
-            <TableCell>
+            <TableCell className="text-right">
               {item.stock}
             </TableCell>
-            <TableCell>
+            <TableCell className="text-right">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost">
