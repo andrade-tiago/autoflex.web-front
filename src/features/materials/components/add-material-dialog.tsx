@@ -98,7 +98,7 @@ export const AddMaterialDialog: React.FunctionComponent<AddMaterialDialogProps> 
           </div>
 
           <DialogFooter>
-            <Button type="submit">
+            <Button type="submit" className="bg-cyan-700 hover:bg-cyan-800 enabled:cursor-pointer">
               Criar
             </Button>
           </DialogFooter>

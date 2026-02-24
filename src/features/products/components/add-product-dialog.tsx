@@ -184,6 +184,7 @@ export const AddProductDialog: React.FunctionComponent<AddProductDialogProps> = 
 
                 <Button
                   type="button"
+                  className="bg-cyan-700 hover:bg-cyan-800 enabled:cursor-pointer"
                   onClick={() => composition.append({ rawMaterialId: '', requiredQuantity: 1 })}
                 >
                   Adicionar material
@@ -193,7 +194,7 @@ export const AddProductDialog: React.FunctionComponent<AddProductDialogProps> = 
           </div>
 
           <DialogFooter>
-            <Button type="submit">
+            <Button type="submit" className="bg-cyan-700 hover:bg-cyan-800 enabled:cursor-pointer">
               Criar
             </Button>
           </DialogFooter>

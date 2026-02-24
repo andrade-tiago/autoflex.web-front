@@ -72,7 +72,7 @@ export const ProductsPage: React.FunctionComponent = () => {
               className="w-max"
             />
             <Button
-              className="bg-amber-500 hover:bg-amber-600 enabled:cursor-pointer"
+              className="bg-cyan-700 hover:bg-cyan-800 enabled:cursor-pointer"
               onClick={() => setItemAction({ action: 'create' })}
             >
               Novo

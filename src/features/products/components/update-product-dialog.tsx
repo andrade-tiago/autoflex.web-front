@@ -202,6 +202,7 @@ export const UpdateProductDialog: React.FunctionComponent<UpdateProductDialogPro
 
                 <Button
                   type="button"
+                  className="bg-cyan-700 hover:bg-cyan-800 enabled:cursor-pointer"
                   onClick={() => composition.append({ rawMaterialId: '', requiredQuantity: 1 })}
                 >
                   Adicionar material
@@ -211,7 +212,10 @@ export const UpdateProductDialog: React.FunctionComponent<UpdateProductDialogPro
           </div>
 
           <DialogFooter>
-            <Button type="submit">
+            <Button
+              type="submit"
+              className="bg-cyan-700 hover:bg-cyan-800 enabled:cursor-pointer"
+            >
               Atualizar
             </Button>
           </DialogFooter>
