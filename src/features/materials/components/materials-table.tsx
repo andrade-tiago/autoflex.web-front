@@ -15,6 +15,7 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import { Button } from '@/shared/components/ui/button'
 import { MoreHorizontalIcon } from 'lucide-react'
+import { LoadingTableData } from '@/shared/components/loading-table-data'
 import type { RawMaterial } from '@/core/domain/models/raw-material.model'
 import type { ItemAction } from '../types/item-action'
 
@@ -72,7 +73,7 @@ export const MaterialsTable: React.FunctionComponent<MaterialsTableProps> = (pro
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     variant="destructive"
-                    onClick={() => props.setAction?.({ item, action: 'delete' })}
+                    onClick={() => props.setAction({ item, action: 'delete' })}
                   >
                     Excluir
                   </DropdownMenuItem>
@@ -85,7 +86,7 @@ export const MaterialsTable: React.FunctionComponent<MaterialsTableProps> = (pro
           <TableRow key={i}>
             {Array.from({ length: TABLE_COLS }).map((_, j) =>
               <TableCell key={j}>
-                <Skeleton />
+                <LoadingTableData />
               </TableCell>
             )}
           </TableRow>
@@ -107,8 +108,4 @@ export const MaterialsTable: React.FunctionComponent<MaterialsTableProps> = (pro
       </TableBody>
     </Table>
   )
-}
-
-const Skeleton: React.FunctionComponent = () => {
-  return <span className="w-2/3 h-4 block bg-gray-200 animate-pulse rounded-2xl" />
 }

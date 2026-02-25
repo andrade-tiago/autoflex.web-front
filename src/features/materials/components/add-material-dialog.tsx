@@ -49,7 +49,7 @@ export const AddMaterialDialog: React.FunctionComponent<AddMaterialDialogProps> 
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <DialogHeader>
             <DialogTitle>
-              Adicionar matéria-prima
+              Nova matéria-prima
             </DialogTitle>
           </DialogHeader>
 

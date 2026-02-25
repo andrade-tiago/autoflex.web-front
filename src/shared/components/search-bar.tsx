@@ -9,7 +9,6 @@ type SearchBarProps = {
   value: string
   onChange: React.HTMLAttributes<HTMLInputElement>['onChange']
   results?: number
-  className?: React.HTMLAttributes<HTMLInputElement>['className']
 } 
 
 export const SearchBar: React.FunctionComponent<SearchBarProps> = props => {
@@ -18,8 +17,11 @@ export const SearchBar: React.FunctionComponent<SearchBarProps> = props => {
     : `${props.results ?? 0} resultados`
 
   return (
-    <InputGroup className={props.className}>
-      <InputGroupInput value={props.value} onChange={props.onChange} />
+    <InputGroup>
+      <InputGroupInput
+        value={props.value}
+        onChange={props.onChange}
+      />
       <InputGroupAddon>
         <SearchIcon />
       </InputGroupAddon>

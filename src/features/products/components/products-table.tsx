@@ -15,17 +15,10 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import { Button } from '@/shared/components/ui/button'
 import { MoreHorizontalIcon } from 'lucide-react'
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '@/shared/components/ui/hover-card'
+import { CurrencyTableData } from '@/shared/components/currency-table-data'
+import { LoadingTableData } from '@/shared/components/loading-table-data'
 import type { ItemAction } from '../types/item-action'
 import type { Product } from '@/core/domain/models/product.model'
-import { useMaterials } from '@/hooks/use-materials.hook'
-import type { RawMaterial } from '@/core/domain/models/raw-material.model'
-import type { ComponentProps } from 'react'
-import { CurrencyFormatter } from '@/core/infra/shared/currency-formatter'
 
 const TABLE_COLS = 3
 
@@ -38,12 +31,6 @@ export type TableStatus = 'loading' | 'no_search_results' | 'empty' | 'showing'
 
 export const ProductsTable: React.FunctionComponent<ProductsTableProps> = (props) => {
   const products = props.products ?? []
-
-  const materials = useMaterials()
-
-  function getMaterial(id: string): RawMaterial | undefined {
-    return materials.data?.find(i => i.id === id)
-  }
 
   return (
     <Table>
@@ -62,28 +49,13 @@ export const ProductsTable: React.FunctionComponent<ProductsTableProps> = (props
       </TableHeader>
       <TableBody>
         {props.status === 'showing' && products.map(product =>
-          <HoverCard key={product.id} openDelay={100} closeDelay={100}>
-            <HoverCardTrigger asChild>
-              <ProductTableRow product={product} setAction={props.setAction} />
-            </HoverCardTrigger>
-
-            <HoverCardContent side="bottom">
-              <span className="font-medium">Materiais requeridos:</span>
-              <ul>
-                {product.composition.map(item => (
-                  <li key={item.materialId} className='list-disc list-inside'>
-                    {getMaterial(item.materialId)?.name}: {item.quantity}
-                  </li>
-                ))}
-              </ul>
-            </HoverCardContent>
-          </HoverCard>
+          <ProductTableRow product={product} setAction={props.setAction} />
         )}
         {props.status === 'loading' && Array.from({ length: 10 }).map((_, i) =>
           <TableRow key={i}>
             {Array.from({ length: TABLE_COLS }).map((_, j) =>
               <TableCell key={j}>
-                <DataSkeleton />
+                <LoadingTableData />
               </TableCell>
             )}
           </TableRow>
@@ -107,22 +79,18 @@ export const ProductsTable: React.FunctionComponent<ProductsTableProps> = (props
   )
 }
 
-type ProductTableRowProps = ComponentProps<typeof TableRow> & {
+type ProductTableRowProps = {
   product: Product
   setAction: ProductsTableProps['setAction']
 }
-const ProductTableRow: React.FunctionComponent<ProductTableRowProps> = ({
-  product,
-  setAction,
-  ...props
-}) => {
+const ProductTableRow: React.FunctionComponent<ProductTableRowProps> = (props) => {
   return (
-    <TableRow key={product.id} {...props}>
+    <TableRow key={props.product.id}>
       <TableCell>
-        {product.name}
+        {props.product.name}
       </TableCell>
       <TableCell className="text-right">
-        {CurrencyFormatter.format(product.value)}
+        <CurrencyTableData value={props.product.value} />
       </TableCell>
       <TableCell className="text-right">
         <DropdownMenu>
@@ -134,14 +102,14 @@ const ProductTableRow: React.FunctionComponent<ProductTableRowProps> = ({
 
           <DropdownMenuContent>
             <DropdownMenuItem
-              onClick={() => setAction({ item: product, action: 'edit' })}
+              onClick={() => props.setAction({ item: props.product, action: 'edit' })}
             >
               Editar
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               variant="destructive"
-              onClick={() => setAction({ item: product, action: 'delete' })}
+              onClick={() => props.setAction({ item: props.product, action: 'delete' })}
             >
               Excluir
             </DropdownMenuItem>
@@ -150,8 +118,4 @@ const ProductTableRow: React.FunctionComponent<ProductTableRowProps> = ({
       </TableCell>
     </TableRow>
   )
-}
-
-const DataSkeleton: React.FunctionComponent = () => {
-  return <span className="w-2/3 h-4 inline-block bg-gray-200 animate-pulse rounded-xl" />
 }

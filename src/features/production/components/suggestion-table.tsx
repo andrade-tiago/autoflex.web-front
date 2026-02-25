@@ -7,33 +7,35 @@ import {
   TableHeader,
   TableRow,
 } from '@/shared/components/ui/table'
-import { CurrencyFormatter } from '@/core/infra/shared/currency-formatter'
+import { CurrencyTableData } from '@/shared/components/currency-table-data'
+import { LoadingTableData } from '@/shared/components/loading-table-data'
 import type { ProductionSuggestion } from '@/core/use-cases/suggest-production.use-case'
+import { Link } from 'react-router'
 
 type SuggestionTableProps = {
   suggestion?: ProductionSuggestion
   tableStatus: SuggestionTableStatus
 }
-export type SuggestionTableStatus = 'showing' | 'loading' | 'empty'
+export type SuggestionTableStatus = 'showing' | 'loading' | 'empty' | 'no_products'
 
 const TABLE_COLS: number = 4
 const LOADING_TABLE_ROWS: number = 5
 
 export const SuggestionTable: React.FunctionComponent<SuggestionTableProps> = (props) => {
   return (
-    <Table>
+    <Table className="table-fixed w-full">
       <TableHeader>
         <TableRow>
-          <TableHead>
+          <TableHead className="overflow-x-auto whitespace-break-spaces">
             Produto
           </TableHead>
-          <TableHead>
+          <TableHead className="overflow-x-auto whitespace-break-spaces">
             Valor unitário
           </TableHead>
-          <TableHead>
+          <TableHead className="overflow-x-auto whitespace-break-spaces">
             Quantidade
           </TableHead>
-          <TableHead>
+          <TableHead className="overflow-x-auto whitespace-break-spaces">
             Valor total
           </TableHead>
         </TableRow>
@@ -44,9 +46,24 @@ export const SuggestionTable: React.FunctionComponent<SuggestionTableProps> = (p
           <TableRow key={i}>
             {Array.from({ length: TABLE_COLS }).map((_, j) =>
               <TableCell key={j}>
-                <LoadingData />
+                <LoadingTableData />
               </TableCell>
             )}
+          </TableRow>
+        )}
+        {props.tableStatus === 'no_products' && (
+          <TableRow>
+            <TableCell
+              colSpan={TABLE_COLS}
+              align="center"
+              className="text-gray-500 whitespace-break-spaces "
+            >
+              Não há produtos cadastrados no momento. Clique{' '}
+              <Link className="underline text-cyan-600" to="/products">
+                aqui
+              </Link>
+              {' '}para acessar o controle de produtos.
+            </TableCell>
           </TableRow>
         )}
         {props.tableStatus === 'empty' && (
@@ -66,13 +83,13 @@ export const SuggestionTable: React.FunctionComponent<SuggestionTableProps> = (p
               {suggestion.productName}
             </TableCell>
             <TableCell className="text-right">
-              {CurrencyFormatter.format(suggestion.unitValue)}
+              <CurrencyTableData value={suggestion.unitValue} />
             </TableCell>
             <TableCell className="text-right">
               {suggestion.quantity.toLocaleString()}
             </TableCell>
             <TableCell className="text-right">
-              {CurrencyFormatter.format(suggestion.totalValue)}
+              <CurrencyTableData value={suggestion.totalValue} />
             </TableCell>
           </TableRow>
         )}
@@ -85,17 +102,11 @@ export const SuggestionTable: React.FunctionComponent<SuggestionTableProps> = (p
               Total
             </TableCell>
             <TableCell className="text-right">
-              {CurrencyFormatter.format(props.suggestion?.totalValue ?? 0)}
+              <CurrencyTableData value={props.suggestion?.totalValue} />
             </TableCell>
           </TableRow>
         </TableFooter>
       )}
     </Table>
-  )
-}
-
-const LoadingData: React.FunctionComponent = () => {
-  return (
-    <span className="inline-block rounded-xl bg-gray-300 h-5 w-2/3 animate-pulse" />
   )
 }

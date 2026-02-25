@@ -7,7 +7,7 @@ import {
 } from '@/shared/components/ui/card'
 import { ProductsTable, type TableStatus } from '../components/products-table'
 import { useMemo, useState } from 'react'
-import { useProducts } from '../hooks/use-products.hook'
+import { useProducts } from '../../../hooks/use-products.hook'
 import { SearchBar } from '@/shared/components/search-bar'
 import { Button } from '@/shared/components/ui/button'
 import { AddProductDialog } from '../components/add-product-dialog'
@@ -52,8 +52,8 @@ export const ProductsPage: React.FunctionComponent = () => {
   }, [products, search, results])
 
   return (
-    <div>
-      <Card className="max-w-2xl mx-auto">
+    <div className="flex-1 flex flex-col items-center">
+      <Card className="w-full max-w-lg">
         <CardHeader>
           <CardTitle>
             Produtos
@@ -63,13 +63,12 @@ export const ProductsPage: React.FunctionComponent = () => {
           </CardDescription>
         </CardHeader>
 
-        <CardContent>
+        <CardContent className="flex flex-col gap-3">
           <div className="flex justify-between gap-3">
             <SearchBar
               value={search}
               onChange={event => setSearch(event.target.value)}
               results={results?.length}
-              className="w-max"
             />
             <Button
               className="bg-cyan-700 hover:bg-cyan-800 enabled:cursor-pointer"

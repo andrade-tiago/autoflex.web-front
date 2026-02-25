@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/components/ui/card'
+import { useProducts } from '@/hooks/use-products.hook'
 import {
   SuggestionTable,
   type SuggestionTableStatus
@@ -14,14 +15,17 @@ import {
 
 export const SuggestionPage: React.FunctionComponent = () => {
   const suggestion = useProductSuggestion()
+  const products = useProducts()
 
   const tableStatus = useMemo((): SuggestionTableStatus => {
+    if (products.data && products.data.length === 0)
+      return 'no_products'
     if (suggestion.isLoading)
       return 'loading'
     if (suggestion.data && suggestion.data.products.length === 0)
       return 'empty'
     return 'showing'
-  }, [suggestion])
+  }, [suggestion, products])
   
   return (
     <div className="flex-1 flex flex-col items-center">
@@ -32,12 +36,12 @@ export const SuggestionPage: React.FunctionComponent = () => {
           </CardTitle>
           <CardDescription>
             Sugestão de produção baseada nos materiais em estoque e nos materiais
-            necessários para os produto, com a preferência para os produtos de maior
-            valor.
+            necessários para os produto disponíveis, com a preferência para os produtos
+            de maior valor.
           </CardDescription>
         </CardHeader>
 
-        <CardContent>
+        <CardContent className="w-full flex flex-col gap-3">
           <SuggestionTable
             tableStatus={tableStatus}
             suggestion={suggestion.data}
