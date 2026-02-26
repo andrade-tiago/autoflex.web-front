@@ -49,7 +49,11 @@ export const ProductsTable: React.FunctionComponent<ProductsTableProps> = (props
       </TableHeader>
       <TableBody>
         {props.status === 'showing' && products.map(product =>
-          <ProductTableRow product={product} setAction={props.setAction} />
+          <ProductTableRow
+            key={product.id}
+            product={product}
+            setAction={props.setAction}
+          />
         )}
         {props.status === 'loading' && Array.from({ length: 10 }).map((_, i) =>
           <TableRow key={i}>
