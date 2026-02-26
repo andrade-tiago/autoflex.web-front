@@ -1,73 +1,28 @@
-# React + TypeScript + Vite
+# Autoflex Web Front
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este repositório é destinado à camada front-end do desafio proposto no processo seletivo para desenvolvedor full stack na empresa Projedata.
 
-Currently, two official plugins are available:
+## :label: Sobre o desafio
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+O desafio consiste na implementação de um sistema para uma indústria, sendo responsável pela gestão dos produtos fabricados e das matérias-primas necessárias para a fabricação.
 
-## React Compiler
+### :pushpin: Funcionalidades
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Interface para o CRUD de produtos (Products);
+- Interface para o CRUD de matérias-primas (RawMaterials);
+- Interface para a sugestão de produção baseada nas matérias-primas disponíveis em estoque, com prioridade para os produtos de maior valor.
 
-## Expanding the ESLint configuration
+## :computer: Como executar
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Para executar localmente, clone o repositório para a sua máquina, e então, execute no terminal o seguinte comando:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+> [!IMPORTANT]
+> Você precisará ter instalado em sua máquina a plataforma **Node.js**. Você pode utilizar o gerenciador de pacotes nativo (NPM), caso não queira instalar ou utilizar o PNPM, ou outra ferramenta.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## :gem: Tecnologias e Patterns
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+O front-end foi construído sobre o **React** com **TypeScript**, com uma das implementações possíveis de **arquitetura feature-based**. Além dessas ferramentas, foi utilizado **Vite**, para turbinar o build, **Tailwind CSS** para padronização dos estilos, os componentes disponibilizados pelo **shadcn/ui**, **React Router** para o roteamento, e **React Query** para cacheamento e controle dos dados retornados pelas requisições à [API do back-end](https://github.com/andrade-tiago/autoflex.rest-api).
